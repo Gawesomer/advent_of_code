@@ -43,7 +43,7 @@ def get_n_numbers_that_sum_to_target(nums, n, target):
 
 
 if __name__ == "__main__":
-    with open("input_file.txt", "r") as input_file:
+    with open("input_01.txt", "r") as input_file:
         nums = get_numbers_from_file(input_file)
     nums = get_n_numbers_that_sum_to_target(nums, 3, 2020)
     res = 1
