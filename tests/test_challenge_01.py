@@ -44,6 +44,16 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(expected_list, actual_list)
 
+    def test_solution_found_when_solution_consists_of_last_elements(self):
+        nums = [1721, 299, 1456, 979, 366, 675]
+        target = 2020
+        expected_list = [366, 675, 979]
+
+        actual_list = get_n_numbers_that_sum_to_target(nums, 3, target)
+        actual_list.sort()
+
+        self.assertEqual(expected_list, actual_list)
+
     def test_no_solution_returns_empty_list(self):
         nums = [1721, 979, 366, 299, 675, 1456]
         target = 0

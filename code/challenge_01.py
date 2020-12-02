@@ -31,7 +31,7 @@ def get_n_numbers_that_sum_to_target(nums, n, target):
             res.append(target)
         return res
 
-    for i in range(len(nums)):
+    for i in range(len(nums)-(n-1)):
         tmp = nums[i]
         del nums[i]
         ret = get_n_numbers_that_sum_to_target(nums, n-1, target-tmp)
