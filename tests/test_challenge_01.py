@@ -44,6 +44,29 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(expected_list, actual_list)
 
+    def test_no_solution_returns_empty_list(self):
+        nums = [1721, 979, 366, 299, 675, 1456]
+        target = 0
+        expected_list = []
+
+        actual_list = get_n_numbers_that_sum_to_target(nums, 3, target)
+
+        self.assertEqual(expected_list, actual_list)
+
+    def test_regression_test_01(self):
+        """
+        Popping elements from list and appending them back combined with
+        incrementing index caused array indexing to skip some values.
+        """
+        nums = [1, 2, 3, 4]
+        target = 6
+        expected_list = [2, 4]
+
+        actual_list = get_n_numbers_that_sum_to_target(nums, 2, target)
+        actual_list.sort()
+
+        self.assertEqual(expected_list, actual_list)
+
 
 if __name__ == "__main__":
     unittest.main()

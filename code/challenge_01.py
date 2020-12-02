@@ -38,7 +38,7 @@ def get_n_numbers_that_sum_to_target(nums, n, target):
         if len(ret) > 0:
             ret.append(tmp)
             return ret
-        nums.append(tmp)
+        nums.insert(i, tmp)
     return []
 
 
