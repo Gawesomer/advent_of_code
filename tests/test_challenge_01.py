@@ -27,20 +27,22 @@ class TestProcessor(unittest.TestCase):
     def test_nominal_case(self):
         nums = [1721, 979, 366, 299, 675, 1456]
         target = 2020
-        expected_pair = (299, 1721)
+        expected_list = [299, 1721]
 
-        actual_pair = get_x_numbers_that_sum_to_target(nums, 2, target)
+        actual_list = get_n_numbers_that_sum_to_target(nums, 2, target)
+        actual_list.sort()
 
-        self.assertEqual(expected_pair, actual_pair)
+        self.assertEqual(expected_list, actual_list)
 
     def test_triple_sum(self):
         nums = [1721, 979, 366, 299, 675, 1456]
         target = 2020
-        expected_list = (366, 675, 979)
+        expected_list = [366, 675, 979]
 
-        actual_pair = get_x_numbers_that_sum_to_target(nums, 3, target)
+        actual_list = get_n_numbers_that_sum_to_target(nums, 3, target)
+        actual_list.sort()
 
-        self.assertEqual(expected_list, actual_pair)
+        self.assertEqual(expected_list, actual_list)
 
 
 if __name__ == "__main__":
