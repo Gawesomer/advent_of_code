@@ -53,7 +53,7 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(expected_list, actual_list)
 
-    def test_regression_test_01(self):
+    def test_regression_test_00(self):
         """
         Popping elements from list and appending them back combined with
         incrementing index caused array indexing to skip some values.
