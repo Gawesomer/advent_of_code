@@ -34,9 +34,14 @@ def btoi(binary, bitset):
 if __name__ == "__main__":
     with open("input_05.txt", "r") as input_file:
         boardingpasses = parse_boardingpass(input_file)
+    all_bpass = set()
     max_bpass = 0
     for bpass in boardingpasses:
         curr_bpass = (btoi(bpass[0], 'B')*8)+btoi(bpass[1], 'R')
+        all_bpass.add(curr_bpass)
         if curr_bpass > max_bpass:
             max_bpass = curr_bpass
     print(max_bpass)
+    for i in range(0, 1024):
+        if i not in all_bpass and ((i-1 in all_bpass) and (i+1 in all_bpass)):
+            print("missing: {}".format(i))

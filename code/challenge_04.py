@@ -144,7 +144,6 @@ def validate_passport(passport):
                 optional_fields[key] = True
             else:
                 return False
-    print(required_fields)
     return all(required_fields.values())
 
 
