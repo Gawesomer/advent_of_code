@@ -1,7 +1,7 @@
 import io
 import unittest
 
-from code.challenge_02 import *
+from day_02.code import *
 
 
 class TestProcessor(unittest.TestCase):

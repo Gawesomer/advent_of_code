@@ -32,7 +32,7 @@ def btoi(binary, bitset):
 
 
 if __name__ == "__main__":
-    with open("input_05.txt", "r") as input_file:
+    with open("input.txt", "r") as input_file:
         boardingpasses = parse_boardingpass(input_file)
     all_bpass = set()
     max_bpass = 0

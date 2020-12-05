@@ -99,6 +99,6 @@ def num_invalid_passwords(policy, policy_passwords):
 
 
 if __name__ == "__main__":
-    with open("input_02.txt", "r") as input_file:
+    with open("input.txt", "r") as input_file:
         lines = parse_line_from_file(input_file)
     print(num_invalid_passwords(position_password_policy, lines))

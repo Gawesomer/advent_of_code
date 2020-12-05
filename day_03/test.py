@@ -1,7 +1,7 @@
 import io
 import unittest
 
-from code.challenge_03 import *
+from day_03.code import *
 
 
 class TestParser(unittest.TestCase):

@@ -148,7 +148,7 @@ def validate_passport(passport):
 
 
 if __name__ == "__main__":
-    with open("input_04.txt", "r") as input_file:
+    with open("input.txt", "r") as input_file:
         passports = parse_passports(input_file)
     valid_count = 0
     for passport in passports:
