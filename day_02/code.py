@@ -1,3 +1,7 @@
+import pathlib
+import os
+
+
 def parse_line_from_file(input_file):
     """
     Get lines from file
@@ -99,6 +103,7 @@ def num_invalid_passwords(policy, policy_passwords):
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as input_file:
+    input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
+    with open(input_filename, "r") as input_file:
         lines = parse_line_from_file(input_file)
     print(num_invalid_passwords(position_password_policy, lines))

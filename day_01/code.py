@@ -1,3 +1,7 @@
+import pathlib
+import os
+
+
 def get_numbers_from_file(input_file):
     """
     Get integers from file
@@ -43,7 +47,8 @@ def get_n_numbers_that_sum_to_target(nums, n, target):
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as input_file:
+    input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
+    with open(input_filename, "r") as input_file:
         nums = get_numbers_from_file(input_file)
     nums = get_n_numbers_that_sum_to_target(nums, 3, 2020)
     res = 1

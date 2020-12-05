@@ -1,3 +1,7 @@
+import pathlib
+import os
+
+
 def parse_boardingpass(input_file):
     """
     Get boarding passes from file
@@ -32,7 +36,8 @@ def btoi(binary, bitset):
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as input_file:
+    input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
+    with open(input_filename, "r") as input_file:
         boardingpasses = parse_boardingpass(input_file)
     all_bpass = set()
     max_bpass = 0

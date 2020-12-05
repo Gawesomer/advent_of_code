@@ -1,3 +1,7 @@
+import pathlib
+import os
+
+
 def parse_map(input_file):
     """
     Parse tree map from input file
@@ -43,7 +47,8 @@ def count_trees(treemap, x_eps, y_eps):
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as input_file:
+    input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
+    with open(input_filename, "r") as input_file:
         treemap = parse_map(input_file)
     slope_0 = count_trees(treemap, 1, 1)
     slope_1 = count_trees(treemap, 3, 1)

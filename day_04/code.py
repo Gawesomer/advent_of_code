@@ -1,3 +1,7 @@
+import pathlib
+import os
+
+
 def parse_passports(input_file):
     """
     Get passports from file
@@ -148,7 +152,8 @@ def validate_passport(passport):
 
 
 if __name__ == "__main__":
-    with open("input.txt", "r") as input_file:
+    input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
+    with open(input_filename, "r") as input_file:
         passports = parse_passports(input_file)
     valid_count = 0
     for passport in passports:
