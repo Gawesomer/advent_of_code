@@ -1,4 +1,11 @@
 def validate_byr(byr):
+    """
+    Validate birth year
+    params:
+        byr (str): birth year
+    returns:
+        True if `byr` is a valid year within [1920, 2002], False otherwise
+    """
     try:
         int_byr = int(byr)
     except ValueError:
@@ -7,6 +14,13 @@ def validate_byr(byr):
 
 
 def validate_iyr(iyr):
+    """
+    Validate issue year
+    params:
+        iyr (str): issue year
+    returns:
+        True if `iyr` is a valid year within [2010, 2020], False otherwise
+    """
     try:
         int_iyr = int(iyr)
     except ValueError:
@@ -15,6 +29,13 @@ def validate_iyr(iyr):
 
 
 def validate_eyr(eyr):
+    """
+    Validate expiry year
+    params:
+        eyr (str): expiry year
+    returns:
+        True if `eyr` is a valid year within [2020, 2030], False otherwise
+    """
     try:
         int_eyr = int(eyr)
     except ValueError:
@@ -23,6 +44,16 @@ def validate_eyr(eyr):
 
 
 def validate_hgt(hgt):
+    """
+    Validate height
+    params:
+        hgt (str): height. must be in the format "{number}{unit}", where
+                   `number` is an integer and `unit` is one of {"cm, "in"}
+    returns:
+        True if `hgt` is formatted properly and `number` is within [150, 193]
+        if `unit` is "cm", or within [59, 76] if `unit` is "in",
+        False otherwise
+    """
     num = hgt[:len(hgt)-2]
     try:
         int_num = int(num)
@@ -36,6 +67,14 @@ def validate_hgt(hgt):
 
 
 def validate_hcl(hcl):
+    """
+    Validate hair color
+    params:
+        hcl (str): hair color. must be in the format "#%x%x%x%x%x%x%x", where
+        "%x" is a digit or a letter within ['a', 'f']
+    returns:
+        True if `hcl` is formatted properly, False otherwise
+    """
     if hcl[0] != '#':
         return False
     if len(hcl) > 7:
@@ -47,6 +86,14 @@ def validate_hcl(hcl):
 
 
 def validate_ecl(ecl):
+    """
+    Validate eye color
+    params:
+        ecl (str): eye color. must be one of
+                   {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
+    returns:
+        True if `ecl` is a valid color, False otherwise
+    """
     if ecl == "amb":
         return True
     elif ecl == "blu":
@@ -65,6 +112,14 @@ def validate_ecl(ecl):
 
 
 def validate_pid(pid):
+    """
+    Validate passport ID
+    params:
+        pid (str): passport ID. must be a nine digit integer, including leading
+                   zeroes
+    returns:
+        True if `pid` is a valid passport ID, False otherwise
+    """
     if len(pid) != 9:
         return False
     try:
