@@ -45,4 +45,9 @@ def count_trees(treemap, x_eps, y_eps):
 if __name__ == "__main__":
     with open("input_03.txt", "r") as input_file:
         treemap = parse_map(input_file)
-    print(count_trees(treemap, 3, 1))
+    slope_0 = count_trees(treemap, 1, 1)
+    slope_1 = count_trees(treemap, 3, 1)
+    slope_2 = count_trees(treemap, 5, 1)
+    slope_3 = count_trees(treemap, 7, 1)
+    slope_4 = count_trees(treemap, 1, 2)
+    print(slope_0*slope_1*slope_2*slope_3*slope_4)
