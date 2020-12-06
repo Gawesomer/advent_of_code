@@ -40,10 +40,9 @@ def count_trees(treemap, x_eps, y_eps):
     while y < len(treemap):
         if treemap[y][x]:
             treecount += 1
-        x = (x+x_eps)%len(treemap[y])
+        x = (x+x_eps) % len(treemap[y])
         y += y_eps
     return treecount
-
 
 
 if __name__ == "__main__":

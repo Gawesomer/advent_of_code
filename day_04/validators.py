@@ -80,7 +80,8 @@ def validate_hcl(hcl):
     if len(hcl) > 7:
         return False
     for i in range(1, 7):
-        if not (('a' <= hcl[i] and hcl[i] <= 'f') or ('0' <= hcl[i] and hcl[i] <= '9')):
+        if not (('a' <= hcl[i] and hcl[i] <= 'f')
+                or ('0' <= hcl[i] and hcl[i] <= '9')):
             return False
     return True
 

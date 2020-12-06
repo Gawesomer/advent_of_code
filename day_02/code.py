@@ -58,6 +58,7 @@ def count_password_policy(policy_password):
 
     return (min_count <= letter_count and letter_count <= max_count)
 
+
 def position_password_policy(policy_password):
     """
     Determine wheter password is valid

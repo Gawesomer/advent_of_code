@@ -61,7 +61,7 @@ class TestProcessor(unittest.TestCase):
             "cid": "147",
             "hgt": "183cm",
         }
-        
+
         self.assertTrue(validate_passport(passport))
 
     def test_validate_passport_optional_field_missing(self):
@@ -87,7 +87,7 @@ class TestProcessor(unittest.TestCase):
             "cid": "147",
             "hgt": "183cm",
         }
-        
+
         self.assertFalse(validate_passport(passport))
 
 

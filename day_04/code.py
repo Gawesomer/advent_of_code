@@ -1,7 +1,7 @@
 import pathlib
 import os
 
-import validators
+import day_04.validators as validators
 
 
 def parse_passports(input_file):
@@ -65,12 +65,12 @@ def validate_passport(passport):
     }
     for key, value in passport.items():
         if key in required_fields:
-            if required_fields[key] == False:
+            if required_fields[key] is False:
                 required_fields[key] = field_validators[key](value)
             else:
                 return False
         elif key in optional_fields:
-            if optional_fields[key] == False:
+            if optional_fields[key] is False:
                 optional_fields[key] = True
             else:
                 return False

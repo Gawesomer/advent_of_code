@@ -7,7 +7,7 @@ My solutions to Erick Wastl's
 
 Solution for a given day must be run from the top of the project.<br>
 (i.e. `cwd == advent_of_code`):<br>
-`advent_of_code$ python3 day_01/code.py`
+`advent_of_code$ python3 -m day_01.code`
 
 ### Running Tests
 
