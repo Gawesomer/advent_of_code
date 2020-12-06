@@ -1,5 +1,6 @@
-import pathlib
 import os
+import pathlib
+import string
 
 
 def parse_forms(input_file):
@@ -36,11 +37,25 @@ def set_union(sets):
     return res
 
 
+def set_intersection(sets):
+    """
+    Get intersection of sets
+    params:
+        sets (list(set)): list of sets to take union of
+    returns:
+        set representing union of all sets in `sets`
+    """
+    res = set(string.ascii_lowercase)
+    for s in sets:
+        res = res.intersection(s)
+    return res
+
+
 if __name__ == "__main__":
     input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
     with open(input_filename, "r") as input_file:
         forms = parse_forms(input_file)
     count = 0
     for form in forms:
-        count += len(set_union(form))
+        count += len(set_intersection(form))
     print(count)

@@ -51,6 +51,20 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(expected_union, actual_union)
 
+    def test_set_intersection_nominal_case(self):
+        sets = [
+            {'a', 'b', 'c', 'x'},
+            {'a', 'b', 'c', 'y'},
+            {'a', 'b', 'c', 'z'},
+        ]
+        expected_intersection = {
+            'a', 'b', 'c',
+        }
+
+        actual_intersection = set_intersection(sets)
+
+        self.assertEqual(expected_intersection, actual_intersection)
+
 
 if __name__ == "__main__":
     unittest.main()
