@@ -65,6 +65,21 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(num_fit(bagrules, color), 2)
 
+    def test_num_bags_in_bag_nominal_case(self):
+        bagrules = {
+            "light red": {
+            },
+            "dark orange": {
+                "bright white": 3,
+            },
+            "bright white": {
+                "light red": 2,
+            },
+        }
+        color = "dark orange"
+
+        self.assertEqual(num_bags_in_bag(bagrules, color), (3 + 3*2))
+
 
 if __name__ == "__main__":
     unittest.main()

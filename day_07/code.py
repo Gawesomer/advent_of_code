@@ -35,26 +35,6 @@ def num_fit(bag_rules, color):
     returns:
         number of bag colors into which `color` may fit
     """
-    """
-    fits = set()
-    searches = [color]
-    found = set()
-    found_more = True
-    while found_more:
-        curr = searches.pop()
-        while curr in found:
-            if not searches:
-                return len(fits)
-            curr = searches.pop()
-        found.add(curr)
-        for rule, bags in bag_rules.items():
-            found_more = False
-            if curr in bags:
-                fits.add(rule)
-                searches.append(rule)
-                found_more = True
-    return len(fits)
-    """
     fits = set()
     search = [color]
     while search:
@@ -67,8 +47,26 @@ def num_fit(bag_rules, color):
     return len(fits)
 
 
+def num_bags_in_bag(bag_rules, color):
+    """
+    Get number of bags in a bag of given `color`
+    params:
+        bag_rules (dict): result of `parse_bagrules`
+        color (str): color of bag
+    returns:
+        number of bags that fit inside a bag of `color`
+    """
+    if not bag_rules[color]:
+        return 0
+    count = 0
+    for bag_color, bag_count in bag_rules[color].items():
+        count += bag_count + bag_count*num_bags_in_bag(bag_rules, bag_color)
+    return count
+
+
 if __name__ == "__main__":
     input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
     with open(input_filename, "r") as input_file:
         bagrules = parse_bagrules(input_file)
     print(num_fit(bagrules, "shiny gold"))
+    print(num_bags_in_bag(bagrules, "shiny gold"))
