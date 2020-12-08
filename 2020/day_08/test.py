@@ -55,7 +55,22 @@ class TestProcessor(unittest.TestCase):
             ["acc", 6],
         ]
 
-        self.assertEqual(run_code(code), 5)
+        self.assertEqual(run_code(code), (False, 5))
+
+    def test_run_code_case_without_loop(self):
+        code = [
+            ["nop", 0],
+            ["acc", 1],
+            ["jmp", 4],
+            ["acc", 3],
+            ["jmp", -3],
+            ["acc", -99],
+            ["acc", 1],
+            ["nop", -4],
+            ["acc", 6],
+        ]
+
+        self.assertEqual(run_code(code), (True, 8))
 
 
 if __name__ == "__main__":
