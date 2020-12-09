@@ -67,7 +67,10 @@ class Moon(object):
         return (self.potential_energy * self.kinetic_energy)
 
     def __str__(self):
-        return "pos=<x={}, y={}, z={}>, vel=<x={}, y={}, z={}>".format(
+        return "pos=<x={}, y={}, z={}>, " \
+            "vel=<x={}, y={}, z={}>, " \
+            "ngy=<p={}, k={}, t={}>".format(
             self.position.x, self.position.y, self.position.z,
-            self.velocity.x, self.velocity.y, self.velocity.z
+            self.velocity.x, self.velocity.y, self.velocity.z,
+            self.potential_energy, self.kinetic_energy, self.total_energy,
         )
