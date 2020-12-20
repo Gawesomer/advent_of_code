@@ -240,7 +240,7 @@ def position_corner(tile_map):
     while sides[0] != 'r':
         rotate(tile_map[0][0])
         _, sides = which_match(tile_map[0][0], tile_map[0][1])
-    fliph(tile_map[0][0])
+    fliph(tile_map[0][0])   # hacks
 
 
 def match_pieces(tile1, tile2, desired_sides):
@@ -320,16 +320,64 @@ def build_sea_map(tile_map, width):
     return sea_map
 
 
+def detect_monster(i, j, sea_map):
+    monster_parts = [
+        sea_map[i][j],
+        sea_map[i+1][j-1],
+        sea_map[i+1][j],
+        sea_map[i+1][j+1],
+        sea_map[i+2][j+2],
+        sea_map[i+2][j+5],
+        sea_map[i+1][j+6],
+        sea_map[i+1][j+7],
+        sea_map[i+2][j+8],
+        sea_map[i+2][j+11],
+        sea_map[i+1][j+12],
+        sea_map[i+1][j+13],
+        sea_map[i+2][j+14],
+        sea_map[i+2][j+17],
+        sea_map[i+1][j+18],
+    ]
+    if all([c == '#' for c in monster_parts]):
+        return True
+    return False
+
+
+def remove_monster(i, j, sea_map):
+    sea_map[i][j] = '.'
+    sea_map[i+1][j-1] = '.'
+    sea_map[i+1][j] = '.'
+    sea_map[i+1][j+1] = '.'
+    sea_map[i+2][j+2] = '.'
+    sea_map[i+2][j+5] = '.'
+    sea_map[i+1][j+6] = '.'
+    sea_map[i+1][j+7] = '.'
+    sea_map[i+2][j+8] = '.'
+    sea_map[i+2][j+11] = '.'
+    sea_map[i+1][j+12] = '.'
+    sea_map[i+1][j+13] = '.'
+    sea_map[i+2][j+14] = '.'
+    sea_map[i+2][j+17] = '.'
+    sea_map[i+1][j+18] = '.'
+
+
 def count_sea_monsters(sea_map):
     """
      #
     ###    ##    ##    #
        #  #  #  #  #  #
     """
+    res = 0
     i = 0
-    j = 1
-    while i < len(sea_map)-3:
-        pass
+    while i <= len(sea_map)-3:
+        j = 1
+        while j <= len(sea_map[i])-19:
+            if detect_monster(i, j, sea_map):
+                remove_monster(i, j, sea_map)
+                res += 1
+            j += 1
+        i += 1
+    return res
 
 
 if __name__ == "__main__":
@@ -361,10 +409,13 @@ if __name__ == "__main__":
             print(e, end='')
         print()
 
+    rotate(sea_map) # hacks
+
+    print(count_sea_monsters(sea_map))
+
     total_tags = 0
     for row in sea_map:
         for e in row:
             if e == '#':
                 total_tags += 1
-
-    rotate(sea_map)
+    print(total_tags)
