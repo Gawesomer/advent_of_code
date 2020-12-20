@@ -50,66 +50,6 @@ class TestProcessor(unittest.TestCase):
     def setUp(self):
         pass
 
-    """
-    def test_single_character_matching(self):
-        rules = [
-                [[4, 1, 5]],
-                [[2, 3], [3, 2]],
-                [[4, 4], [5, 5]],
-                [[4, 5], [5, 4]],
-                'a',
-                'b',
-        ]
-        self.assertEqual(matches_rule('a', rules, rules[4]), '')
-
-    def test_single_character_non_matching(self):
-        rules = [
-                [[4, 1, 5]],
-                [[2, 3], [3, 2]],
-                [[4, 4], [5, 5]],
-                [[4, 5], [5, 4]],
-                'a',
-                'b',
-        ]
-        self.assertEqual(matches_rule('b', rules, rules[4]), None)
-
-
-    def test_matches_multiple_rules(self):
-        rules = [
-                [[4, 1, 5]],
-                [[2, 3], [3, 2]],
-                [[4, 4], [5, 5]],
-                [[4, 5], [5, 4]],
-                'a',
-                'b',
-                [[4, 5]],
-        ]
-        self.assertEqual(matches_rule('ab', rules, rules[6]), '')
-
-    def test_does_not_match_multiple_rules(self):
-        rules = [
-                [[4, 1, 5]],
-                [[2, 3], [3, 2]],
-                [[4, 4], [5, 5]],
-                [[4, 5], [5, 4]],
-                'a',
-                'b',
-                [[4, 5]],
-        ]
-        self.assertEqual(matches_rule('aa', rules, rules[6]), None)
-
-    def test_matches_rule_nominal_case(self):
-        rules = [
-                [[4, 1, 5]],
-                [[2, 3], [3, 2]],
-                [[4, 4], [5, 5]],
-                [[4, 5], [5, 4]],
-                'a',
-                'b',
-        ]
-        self.assertEqual(matches_rule('abbbab', rules, rules[0]), ('', 'abbbab'))
-    """
-
     def get_all_sub_indeces_nominal_case(self):
         rule = [[2, 3], [3, 2, 4]]
         expected = set([2, 3, 4])

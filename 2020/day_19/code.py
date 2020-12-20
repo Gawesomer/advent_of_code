@@ -36,27 +36,6 @@ def parse_input(input_file):
     return rules, messages
 
 
-def matches_rule(msg, rules, rule):
-    """
-    return:
-        True if msg matches rule number rule_num
-    """
-    if isinstance(rule, str):
-        if msg and msg[0] == rule:
-            return msg[0], msg[1:]
-        return '', msg
-    
-    for sub_rule in rule:
-        match = ''
-        rest = msg
-        for r_index in sub_rule:
-            sub_match, rest = matches_rule(rest, rules, rules[r_index])
-            match += sub_match
-        if not rest:
-            return match, ''
-    return '', msg
-
-
 def get_all_sub_indeces(rule):
     if isinstance(rule, str):
         return set()
@@ -113,7 +92,6 @@ def process_rules(rules):
 
     left_to_compile = True
     while left_to_compile:
-        print(processed_rules.keys())
         left_to_compile = False
         for i, r in rules.items():
             if i not in processed_rules:
@@ -128,18 +106,6 @@ def remove_match(msg, patterns):
         if msg.startswith(p):
             return True, msg[len(p):]
     return False, msg
-
-
-def split_matches(msgs, patterns):
-    matches = []
-    non_matches = []
-    for msg in msgs:
-        matching, rest = remove_match(msg, patterns)
-        if matching:
-            matches.append(rest)
-        else:
-            non_matches.append(rest)
-    return matches, non_matches
 
 
 if __name__ == "__main__":
