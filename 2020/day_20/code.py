@@ -1,3 +1,4 @@
+import copy
 import os
 import pathlib
 
@@ -53,11 +54,84 @@ def borders_match(border1, border2):
     return None
 
 
+def which_match(tile1, tile2):
+    """
+    return:
+        reverse_required, (l|r|b|t, l|r|b|t)
+    """
+    b1 = get_borders(tile1)
+    borders1 = {
+        'l': b1[0],
+        'r': b1[1],
+        'b': b1[2],
+        't': b1[3],
+    }
+    b2 = get_borders(tile2)
+    borders2 = {
+        'l': b2[0],
+        'r': b2[1],
+        'b': b2[2],
+        't': b2[3],
+    }
+    for side1, border1 in borders1.items():
+        for side2, border2 in borders2.items():
+            match = borders_match(border1, border2)
+            if match == False:
+                return False, (side1, side2)
+            elif match == True:
+                return True, (side1, side2)
+    return None, None
+
+
+def flipv(tile):
+    tile_copy = copy.deepcopy(tile)
+    i = 0
+    while i < len(tile):
+        j = 0
+        l = len(tile[i])
+        while j < l:
+            tile[i][j] = tile_copy[i][l-j-1]
+            j += 1
+        i += 1
+
+
+def fliph(tile):
+    tile_copy = copy.deepcopy(tile)
+    i = 0
+    l = len(tile)
+    while i < len(tile):
+        j = 0
+        while j < l:
+            tile[i][j] = tile_copy[l-i-1][j]
+            j += 1
+        i += 1
+
+
+def rotate(tile):
+    """
+    rotate 90 degrees clockwise
+    """
+    tile_copy = copy.deepcopy(tile)
+    o_x = 0
+
+    c_y = 0
+    l = len(tile_copy)
+
+    while o_x < len(tile):
+        o_y = 0
+        c_x = l-1
+        while o_y < len(tile[o_x]):
+            tile[o_x][o_y] = tile_copy[c_x][c_y]
+            o_y += 1
+            c_x -= 1
+        o_x += 1
+        c_y += 1
+
+
 def any_matches(tile1, tile2):
     """
     return:
-        list((border1, border2))
-        where border is one of 'l', 'r', 'b', 't'
+        True if match found
     """
     borders1 = get_borders(tile1)
     borders2 = get_borders(tile2)
@@ -152,6 +226,60 @@ def build_id_map(tile_to_matching, width):
     return res
 
 
+def get_corner_matching_borders(tile, n1, n2):
+    s = set()
+    _, tmp = which_match(tile, n1)
+    s.add(tmp[0])
+    _, tmp = which_match(tile, n2)
+    s.add(tmp[0])
+    return s
+
+
+def position_corner(tile_map):
+    _, sides = which_match(tile_map[0][0], tile_map[0][1])
+    while sides[0] != 'r':
+        rotate(tile_map[0][0])
+        _, sides = which_match(tile_map[0][0], tile_map[0][1])
+
+
+def match_pieces(tile1, tile2):
+    for i in range(4):
+        rotate(tile2)
+        is_reversed, sides = which_match(tile1, tile2)
+        if (not is_reversed) and (sides == ('r', 'l')):
+            return
+    flipv(tile2)
+    for i in range(4):
+        rotate(tile2)
+        is_reversed, sides = which_match(tile1, tile2)
+        if (not is_reversed) and (sides == ('r', 'l')):
+            return
+    flipv(tile2)
+    fliph(tile2)
+    for i in range(4):
+        rotate(tile2)
+        is_reversed, sides = which_match(tile1, tile2)
+        if (not is_reversed) and (sides == ('r', 'l')):
+            return
+
+
+def build_map(id_map, tiles):
+    tile_map = []
+    for i, row in enumerate(id_map):
+        tile_map.append([])
+        for col in row:
+            tile_map[i].append(tiles[col])
+    position_corner(tile_map)
+    i = 0
+    while i < len(tile_map):
+        j = 0
+        while j < len(tile_map[i])-1:
+            print("{}, {}".format(i, j))
+            match_pieces(tile_map[i][j], tile_map[i][j+1])
+            j += 1
+        i += 1
+    return tile_map
+
 
 if __name__ == "__main__":
     input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
@@ -164,3 +292,5 @@ if __name__ == "__main__":
     id_map = build_id_map(tile_to_matching.copy(), 12)
     for row in id_map:
         print(row)
+
+    build_map(id_map, tiles)

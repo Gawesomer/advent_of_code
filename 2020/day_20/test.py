@@ -224,6 +224,54 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(expected_id_map, id_map)
 
+    def test_flipv_nominal_case(self):
+        tile = [
+            ['#', '.', '.'],
+            ['.', '.', '#'],
+            ['#', '#', '.'],
+        ]
+        expected_tile = [
+            ['.', '.', '#'],
+            ['#', '.', '.'],
+            ['.', '#', '#'],
+        ]
+
+        flipv(tile)
+
+        self.assertEqual(tile, expected_tile)
+
+    def test_fliph_nominal_case(self):
+        tile = [
+            ['#', '.', '.'],
+            ['.', '.', '#'],
+            ['#', '#', '.'],
+        ]
+        expected_tile = [
+            ['#', '#', '.'],
+            ['.', '.', '#'],
+            ['#', '.', '.'],
+        ]
+
+        fliph(tile)
+
+        self.assertEqual(tile, expected_tile)
+
+    def test_rotate_nominal_case(self):
+        tile = [
+            ['#', '.', '.'],
+            ['.', '.', '#'],
+            ['#', '#', '.'],
+        ]
+        expected_tile = [
+            ['#', '.', '#'],
+            ['#', '.', '.'],
+            ['.', '#', '.'],
+        ]
+
+        rotate(tile)
+
+        self.assertEqual(tile, expected_tile)
+
 
 if __name__ == "__main__":
     unittest.main()
