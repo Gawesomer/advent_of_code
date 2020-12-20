@@ -240,26 +240,27 @@ def position_corner(tile_map):
     while sides[0] != 'r':
         rotate(tile_map[0][0])
         _, sides = which_match(tile_map[0][0], tile_map[0][1])
+    fliph(tile_map[0][0])
 
 
-def match_pieces(tile1, tile2):
+def match_pieces(tile1, tile2, desired_sides):
     for i in range(4):
         rotate(tile2)
         is_reversed, sides = which_match(tile1, tile2)
-        if (not is_reversed) and (sides == ('r', 'l')):
+        if (not is_reversed) and (sides == desired_sides):
             return
     flipv(tile2)
     for i in range(4):
         rotate(tile2)
         is_reversed, sides = which_match(tile1, tile2)
-        if (not is_reversed) and (sides == ('r', 'l')):
+        if (not is_reversed) and (sides == desired_sides):
             return
     flipv(tile2)
     fliph(tile2)
     for i in range(4):
         rotate(tile2)
         is_reversed, sides = which_match(tile1, tile2)
-        if (not is_reversed) and (sides == ('r', 'l')):
+        if (not is_reversed) and (sides == desired_sides):
             return
 
 
@@ -269,16 +270,66 @@ def build_map(id_map, tiles):
         tile_map.append([])
         for col in row:
             tile_map[i].append(tiles[col])
-    position_corner(tile_map)
     i = 0
     while i < len(tile_map):
         j = 0
+        if i == 0:
+            position_corner(tile_map)
+        else:
+            match_pieces(tile_map[i-1][j], tile_map[i][j], ('b', 't'))
         while j < len(tile_map[i])-1:
-            print("{}, {}".format(i, j))
-            match_pieces(tile_map[i][j], tile_map[i][j+1])
+            match_pieces(tile_map[i][j], tile_map[i][j+1], ('r', 'l'))
             j += 1
         i += 1
     return tile_map
+
+
+def display_tile_map(tile_map, width):
+    for row in tile_map:
+        i = 0
+        while i < width:
+            print(i, end=' ')
+            for col in row:
+                for e in col[i]:
+                    print(e, end='')
+            print()
+            i += 1
+
+
+def remove_borders(tile_map):
+    for row_tile in tile_map:
+        for tile in row_tile:
+            tile.pop(0)
+            tile.pop(len(tile)-1)
+            for row in tile:
+                row.pop(0)
+                row.pop(len(row)-1)
+
+
+def build_sea_map(tile_map, width):
+    sea_map = [[]]
+    for row_tile in tile_map:
+        i = 0
+        while i < width:
+            for col in row_tile:
+                for e in col[i]:
+                    sea_map[len(sea_map)-1].append(e)
+            sea_map.append([])
+            i += 1
+    sea_map.pop(len(sea_map)-1)
+    return sea_map
+
+
+def count_sea_monsters(sea_map):
+    """
+     #
+    ###    ##    ##    #
+       #  #  #  #  #  #
+    """
+    i = 0
+    j = 1
+    while i < len(sea_map)-3:
+        pass
 
 
 if __name__ == "__main__":
@@ -287,10 +338,33 @@ if __name__ == "__main__":
         tiles = parse_input(input_file)
 
     tile_to_matching = get_tile_matching(tiles)
-    print(get_corners(tile_to_matching))
+    for k, v in tile_to_matching.items():
+        print("{}: {}".format(k, v))
 
-    id_map = build_id_map(tile_to_matching.copy(), 12)
+    id_map = build_id_map(copy.deepcopy(tile_to_matching), 12)
     for row in id_map:
         print(row)
 
-    build_map(id_map, tiles)
+    tile_map = build_map(id_map, tiles)
+    display_tile_map(tile_map, 10)
+
+    print()
+
+    remove_borders(tile_map)
+    display_tile_map(tile_map, 8)
+
+    print()
+
+    sea_map = build_sea_map(tile_map, 8)
+    for row in sea_map:
+        for e in row:
+            print(e, end='')
+        print()
+
+    total_tags = 0
+    for row in sea_map:
+        for e in row:
+            if e == '#':
+                total_tags += 1
+
+    rotate(sea_map)
