@@ -77,3 +77,19 @@ if __name__ == "__main__":
             if af in f[0]:
                 res += 1
     print(res)
+    
+    for k, v in allergenfood_map.items():
+        print("{}: {}".format(k, v))
+    """
+    List small enough to solve by hand:
+    eggs: bjq
+    fish: jznhvh
+    nuts: klplr
+    peanuts: dtvhzt
+    sesame: sbzd
+    shellfish: tlgjzx
+    soy: ctmbr
+    wheat: kqms
+
+    bjq,jznhvh,klplr,dtvhzt,sbzd,tlgjzx,ctmbr,kqms
+    """
