@@ -49,7 +49,6 @@ def recursive_combat(stck1, stck2):
         True if player1 won, False otherwise
     """
     mem = []
-    print("combat: {}; {}".format(stck1, stck2))
     while len(stck1) > 0 and len(stck2) > 0:
         for m in mem:
             if stck1 == m[0] and stck2 == m[1]:
