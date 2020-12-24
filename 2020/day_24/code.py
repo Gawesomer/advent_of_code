@@ -1,3 +1,4 @@
+import copy
 import os
 import pathlib
 
@@ -53,6 +54,58 @@ def identify_tile(tile, tilecolor_map):
         tilecolor_map[coord] = True
 
 
+def neighbour_coordinates(coord):
+    return [
+        (coord[0]+1, coord[1]),
+        (coord[0], coord[1]+1),
+        (coord[0]-1, coord[1]),
+        (coord[0], coord[1]-1),
+        (coord[0]-1, coord[1]+1),
+        (coord[0]+1, coord[1]-1),
+    ]
+
+
+def num_black_adjacent(coord, tilecolor_map):
+    res = 0
+    for c in neighbour_coordinates(coord):
+        if c in tilecolor_map:
+            if tilecolor_map[c]:
+                res += 1
+    return res
+
+
+def get_white_adjacent(coord, tilecolor_map):
+    res = []
+    for c in neighbour_coordinates(coord):
+        if not tilecolor_map.get(c, False):
+            res.append(c)
+    return res
+
+
+def get_black_tiles(tilecolor_map):
+    res = []
+    for coord, value in tilecolor_map.items():
+        if value:
+            res.append(coord)
+    return res
+
+
+def step(tilecolor_map):
+    tilecolor_map_copy = copy.deepcopy(tilecolor_map)
+
+    black_tiles = get_black_tiles(tilecolor_map)
+    for b in black_tiles:
+        white_adj = get_white_adjacent(b, tilecolor_map)
+        black_adj = num_black_adjacent(b, tilecolor_map)
+        if black_adj == 0 or black_adj > 2:
+            tilecolor_map_copy[b] = False
+        for w in white_adj:
+            if num_black_adjacent(w, tilecolor_map) == 2:
+                tilecolor_map_copy[w] = True
+
+    return tilecolor_map_copy
+
+
 if __name__ == "__main__":
     input_filename = os.path.join(pathlib.Path(__file__).parent, "input.txt")
     with open(input_filename, "r") as input_file:
@@ -67,3 +120,7 @@ if __name__ == "__main__":
         if value:
             num_black += 1
     print(num_black)
+
+    for i in range(100):
+        tilecolor_map = step(tilecolor_map)
+    print(len(get_black_tiles(tilecolor_map)))

@@ -90,6 +90,39 @@ class TestProcessor(unittest.TestCase):
 
         self.assertEqual(num_black, 10)
 
+    def test_step_nominal_case(self):
+        s = "sesenwnenenewseeswwswswwnenewsewsw\n" \
+            "neeenesenwnwwswnenewnwwsewnenwseswesw\n" \
+            "seswneswswsenwwnwse\n" \
+            "nwnwneseeswswnenewneswwnewseswneseene\n" \
+            "swweswneswnenwsewnwneneseenw\n" \
+            "eesenwseswswnenwswnwnwsewwnwsene\n" \
+            "sewnenenenesenwsewnenwwwse\n" \
+            "wenwwweseeeweswwwnwwe\n" \
+            "wsweesenenewnwwnwsenewsenwwsesesenwne\n" \
+            "neeswseenwwswnwswswnw\n" \
+            "nenwswwsewswnenenewsenwsenwnesesenew\n" \
+            "enewnwewneswsewnwswenweswnenwsenwsw\n" \
+            "sweneswneswneneenwnewenewwneswswnese\n" \
+            "swwesenesewenwneswnwwneseswwne\n" \
+            "enesenwswwswneneswsenwnewswseenwsese\n" \
+            "wnwnesenesenenwwnenwsewesewsesesew\n" \
+            "nenewswnwewswnenesenwnesewesw\n" \
+            "eneswnwswnwsenenwnwnwwseeswneewsenese\n" \
+            "neswnwewnwnwseenwseesewsenwsweewe\n" \
+            "wseweeenwnesenwwwswnew\n"
+        input_file = io.StringIO(s)
+        tiles = parse_input(input_file)
+        tilecolor_map = {}
+
+        for t in tiles:
+            identify_tile(t, tilecolor_map)
+
+        for i in range(100):
+            tilecolor_map = step(tilecolor_map)
+
+        self.assertEqual(len(get_black_tiles(tilecolor_map)), 2208)
+
 
 if __name__ == "__main__":
     unittest.main()
