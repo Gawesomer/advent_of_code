@@ -118,10 +118,10 @@ class TestProcessor(unittest.TestCase):
         for t in tiles:
             identify_tile(t, tilecolor_map)
 
-        for i in range(100):
+        for i in range(10):
             tilecolor_map = step(tilecolor_map)
 
-        self.assertEqual(len(get_black_tiles(tilecolor_map)), 2208)
+        self.assertEqual(len(get_black_tiles(tilecolor_map)), 37)
 
 
 if __name__ == "__main__":
