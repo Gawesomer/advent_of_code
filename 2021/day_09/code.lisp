@@ -35,11 +35,32 @@
         (list row (1+ col))))
 
 (defun is-low-point (row col heightmap)
+  (if (not (aref heightmap row col))
+      (return-from is-low-point NIL))
   (let ((val (aref heightmap row col)))
     (dolist (neighbour (neighbour-coordinates row col (array-dimension heightmap 0) (array-dimension heightmap 1)))
       (if (>= val (aref heightmap (first neighbour) (second neighbour)))
           (return-from is-low-point NIL)))
     T))
+
+(defun fill-basin (row col heightmap)
+  (let ((to-process (make-array 5 :fill-pointer 0 :adjustable T)) (basin-size 1))
+    (vector-push-extend (list row col) to-process)
+    (do ()
+        ((eql 0 (length to-process)) basin-size)
+      (let ((curr (vector-pop to-process)))
+        ;(format t "curr: ~a, ~a = ~a ~%" (first curr) (second curr) (aref heightmap (first curr) (second curr)))
+        (dolist (neighbour (neighbour-coordinates (first curr) (second curr) (array-dimension heightmap 0) (array-dimension heightmap 1)))
+          ;(format t "neighbour: ~a, ~a = ~a~%" (first neighbour) (second neighbour) (aref heightmap (first neighbour) (second neighbour)))
+          (when (and
+                 (not (find neighbour to-process :test #'tree-equal))
+                 (aref heightmap (first neighbour) (second neighbour))
+                 (not (eql (aref heightmap (first neighbour) (second neighbour)) 9))
+                 (< (aref heightmap (first curr) (second curr)) (aref heightmap (first neighbour) (second neighbour))))
+            ;(format t "adding to process~%")
+            (incf basin-size)
+            (vector-push-extend neighbour to-process)))
+        (setf (aref heightmap (first curr) (second curr)) 9)))))
 
 (defun find-low-points (heightmap)
   (let ((points NIL))
@@ -49,4 +70,13 @@
             (push (aref heightmap row col) points))))
     points))
 
+(defun basin-sizes (heightmap)
+  (let ((basins NIL))
+    (dotimes (row (array-dimension heightmap 0))
+      (dotimes (col (array-dimension heightmap 1))
+        (if (is-low-point row col heightmap)
+          (push (fill-basin row col heightmap) basins))))
+    basins))
+
 (print (reduce #'+ (find-low-points (parse-heightmap (get-input-lines))) :key #'(lambda (e) (1+ e))))
+(print (sort (basin-sizes (parse-heightmap (get-input-lines))) #'<)) ; 105 * 107 * 113
