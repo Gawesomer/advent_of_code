@@ -70,3 +70,17 @@
     num-flashes))
 
 (print (step-n-times (parse-octopuses (get-input-lines)) 100))
+
+(defun synchronized-p (octopuses)
+  (dotimes (row 10)
+    (dotimes (col 10)
+      (if (not (eql (aref octopuses row col) 0))
+          (return-from synchronized-p NIL))))
+  T)
+
+(defun when-synchronized (octopuses)
+  (do ((i 0 (1+ i)))
+      ((synchronized-p octopuses) i)
+    (light-step octopuses)))
+
+(print (when-synchronized (parse-octopuses (get-input-lines))))
