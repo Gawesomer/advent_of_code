@@ -32,10 +32,29 @@
          (>= y start-y)
          (<= y end-y))))
 
-(let ((prb (make-instance 'probe :x-vel 6 :y-vel 9)))
-  (print prb)
-  (step-probe prb)
-  (print prb))
+(defmethod approachingp ((prb probe) start-x end-x start-y end-y)
+  (and (<= (x prb) end-x)
+       (>= (y prb) start-y)))
+
+(defmethod will-hitp ((prb probe) start-x end-x start-y end-y)
+  (do ()
+      ((not (approachingp prb start-x end-x start-y end-y)) NIL)
+    (if (hitp prb start-x end-x start-y end-y)
+        (return-from will-hitp T))
+    (step-probe prb)))
+
+(defun count-hits (start-x end-x start-y end-y max-y)
+  (let ((num-hits 0))
+    (do ((x 1 (1+ x)))
+        ((> x end-x) NIL)
+      (do ((y start-y (1+ y)))
+          ((> y max-y) NIL)
+        (if (will-hitp (make-instance 'probe :x-vel x :y-vel y) start-x end-x start-y end-y)
+            (incf num-hits))))
+    num-hits))
 
 ;; All of the above is non-sense
-;; Just need to do (geometric-sum (1- start-y)) ; from day_07
+;; For part 1 just need to do (geometric-sum (1- start-y)) ; from day_07
+
+;(print (count-hits 20 30 -10 -5 45))
+(print (count-hits 128 160 -142 -88 10011)) ; Couldn't be bothered to speed this up...
