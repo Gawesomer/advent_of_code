@@ -102,11 +102,21 @@
 
 (let ((all-points NIL))
   (dotimes (i 28)
-    (print (elt *origins* i))
+    (print (elt *scanner-origins* i))
     (setf all-points (append all-points (remap (reorient-scan (copy-tree (elt *scans* i)) (elt *scanner-orientations* i)) (elt *scanner-origins* i)))))
   (setf all-points (remove-duplicates all-points :test #'tree-equal))
   (print all-points)
   (print (length all-points)))
+
+(defun manhattan-dist (point1 point2)
+  (reduce #'+ (map 'list #'(lambda (p1 p2) (abs (- p2 p1))) point1 point2)))
+
+(let ((max-dist 0))
+  (dotimes (i 28)
+    (dotimes (j 28)
+      (if (and (not (eql i j)) (> (manhattan-dist (elt *scanner-origins* i) (elt *scanner-origins* j)) max-dist))
+          (setf max-dist (manhattan-dist (elt *scanner-origins* i) (elt *scanner-origins* j))))))
+  (print max-dist))
 
 ;; Used this to find overlapping scanners
 ;; (dotimes (i (length *scans*))
