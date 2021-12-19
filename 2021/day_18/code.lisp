@@ -1,6 +1,6 @@
 (defun get-input-lines ()
   "Reads lines from file named input.txt"
-  (with-open-file (in "test_input.txt")
+  (with-open-file (in "input.txt")
     (loop for line = (read-line in nil nil)
           while line
           collect line)))
@@ -126,4 +126,14 @@
       (reduce-snailnum snailnum))
     snailnum))
 
-(print (sum-up (get-input-lines)))
+(defun magnitude (snailnum)
+  (if (numberp snailnum)
+      snailnum
+      (progn
+        (if (not (cdr snailnum))
+            (return-from magnitude (magnitude (car snailnum))))
+        (if (and (numberp (car snailnum)) (not (cdr snailnum)))
+            (car snailnum)
+            (+ (* 3 (magnitude (car snailnum))) (* 2 (magnitude (cdr snailnum))))))))
+
+(print (magnitude (sum-up (get-input-lines))))
