@@ -136,4 +136,17 @@
             (car snailnum)
             (+ (* 3 (magnitude (car snailnum))) (* 2 (magnitude (cdr snailnum))))))))
 
+(defun largest-magnitude (snailnums)
+  (let ((curr-max 0))
+    (dotimes (i (length snailnums))
+      (dotimes (j (length snailnums))
+        (if (not (eql i j))
+            (let ((add-res (add-snailnums (copy-tree (elt snailnums i)) (copy-tree (elt snailnums j)))))
+              (reduce-snailnum add-res)
+              (setf add-res (magnitude add-res))
+              (if (> add-res curr-max)
+                  (setf curr-max add-res))))))
+    curr-max))
+
 (print (magnitude (sum-up (get-input-lines))))
+(print (largest-magnitude (map 'list #'parse-snailnum (get-input-lines))))
