@@ -63,26 +63,6 @@
             (split-step (car snailnum) unwind-stack)
             (split-step (cdr snailnum) unwind-stack)))))
 
-;; (defun split-step (snailnum unwind-stack)
-;;   (format t "split: ~a~%" snailnum)
-;;   (when (and (numberp (car snailnum)) (numberp (cadr snailnum)) (not (cddr snailnum)))
-;;     (if (>= (car snailnum) 10)
-;;         (progn
-;;           (let ((left (floor (/ (car snailnum) 2))) (right (ceiling (/ (car snailnum) 2))))
-;;             (setf (car snailnum) (list left right))
-;;             (funcall unwind-stack))))
-;;     (if (>= (cadr snailnum) 10)
-;;         (progn
-;;           (let ((left (floor (/ (cadr snailnum) 2))) (right (ceiling (/ (cadr snailnum) 2))))
-;;             (setf (cadr snailnum) (list left right))
-;;             (funcall unwind-stack)))))
-;;   (if (and (car snailnum) (not (numberp (car snailnum))))
-;;       (split-step (car snailnum) unwind-stack))
-;;   (if (and (cadr snailnum))
-;;       (if (not (numberp (cadr snailnum)))
-;;           (split-step (cadr snailnum) unwind-stack)
-;;           (split-step (cdr snailnum) unwind-stack))))
-
 (defun reduce-snailnum (snailnum)
   (do ((exploded T T) (splitted T T))
       (NIL NIL)
