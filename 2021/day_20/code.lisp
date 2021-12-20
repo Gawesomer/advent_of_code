@@ -12,20 +12,6 @@
         (setf (aref image row col) (if (eql (elt (elt lines row) col) #\.) 0 1))))
     image))
 
-(defun grow-image (image initial-element)
-  (let ((enlarged (make-array (list (+ (array-dimension image 0) 4) (+ (array-dimension image 1) 4)) :initial-element initial-element)))
-    (dotimes (row (array-dimension image 0))
-      (dotimes (col (array-dimension image 1))
-        (setf (aref enlarged (+ row 2) (+ col 2)) (aref image row col))))
-    enlarged))
-
-(defun reduce-image (image)
-  (let ((smaller (make-array (list (- (array-dimension image 0) 2) (- (array-dimension image 1) 2)))))
-    (dotimes (row (array-dimension smaller 0))
-      (dotimes (col (array-dimension smaller 1))
-        (setf (aref smaller row col) (aref (image (+ row 2) (+ col 2))))))
-    smaller))
-
 (defparameter *infinite-pixel* 0)
 
 (defun get-pixel (image row col)
@@ -57,7 +43,7 @@
     res))
 
 (let ((rules (first (get-input-lines))) (image (parse-image (cddr (get-input-lines)))))
-  (dotimes (i 2)
+  (dotimes (i 50)
     (setf *infinite-pixel* (mod i 2))
     (setf image (enhance image rules)))
   (print (count-lit image)))
