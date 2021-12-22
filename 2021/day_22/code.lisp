@@ -43,4 +43,97 @@
                                                      (remove NIL (range->coordinates (second reboot-step) (third reboot-step) (fourth reboot-step))))))))
     (hash-set:hs-count cubes)))
 
-(print (reboot-count (get-input-lines)))
+;(print (reboot-count (get-input-lines)))
+
+(defun count-range (range)
+  (*
+   (- (second (first range)) (first (first range)) -1)
+   (- (second (second range)) (first (second range)) -1)
+   (- (second (third range)) (first (third range)) -1)))
+
+(defun line-intersection (range1 range2)
+  (cond
+    ((and
+      (>= (first range1) (first range2))
+      (<= (first range1) (second range2)))
+     (list (first range1) (min (second range1) (second range2))))
+    ((and
+      (>= (first range2) (first range1))
+      (<= (first range2) (second range1)))
+     (list (first range2) (min (second range1) (second range2))))))
+
+(defun range-intersection (range1 range2)
+  (let ((x-overlap (line-intersection (first range1) (first range2)))
+        (y-overlap (line-intersection (second range1) (second range2)))
+        (z-overlap (line-intersection (third range1) (third range2))))
+    (if (and x-overlap y-overlap z-overlap)
+        (list x-overlap y-overlap z-overlap))))
+
+(defun empty-range (range)
+  (or
+   (< (second (first range)) (first (first range)))
+   (< (second (second range)) (first (second range)))
+   (< (second (third range)) (first (third range)))))
+
+(defun range-difference (range to-remove)
+  (if (not to-remove)
+      (return-from range-difference (list range)))
+  (if (tree-equal range to-remove)
+      (return-from range-difference NIL))
+  (let ((res NIL))
+    (push (list ; Bottom
+           (first range)
+           (list (first (second range)) (1- (first (second to-remove))))
+           (third range))
+          res)
+    (push (list ; Top
+           (first range)
+           (list (1+ (second (second to-remove))) (second (second range)))
+           (third range))
+          res)
+    (push (list ; Large side
+           (first range)
+           (second to-remove)
+           (list (first (third range)) (1- (first (third to-remove)))))
+          res)
+    (push (list ; Large side
+           (first range)
+           (second to-remove)
+           (list (1+ (second (third to-remove))) (second (third range))))
+          res)
+    (push (list ; Small side
+           (list (first (first range)) (1- (first (first to-remove))))
+           (second to-remove)
+           (third to-remove))
+          res)
+    (push (list ; Small side
+           (list (1+ (second (first to-remove))) (second (first range)))
+           (second to-remove)
+           (third to-remove))
+          res)
+    (remove-if #'empty-range res)))
+
+(defun add-range (to-add ranges)
+  (let ((res NIL))
+    (dolist (existing ranges)
+      (setf res (append res (range-difference existing (range-intersection existing to-add)))))
+    (append res (list to-add))))
+
+(defun remove-range (to-remove ranges)
+  (let ((res NIL))
+    (dolist (existing ranges)
+      (setf res (append res (range-difference existing (range-intersection existing to-remove)))))
+    res))
+
+(defun sum-ranges (ranges)
+  (reduce #'+ (map 'list #'count-range ranges)))
+
+(defun reboot-count-full (reboot-steps)
+  (let ((ranges NIL))
+    (dolist (reboot-step reboot-steps)
+      (if (first reboot-step)
+          (setf ranges (add-range (list (second reboot-step) (third reboot-step) (fourth reboot-step)) ranges))
+          (setf ranges (remove-range (list (second reboot-step) (third reboot-step) (fourth reboot-step)) ranges))))
+    (sum-ranges (remove-duplicates ranges :test #'tree-equal))))
+
+(print (reboot-count-full (get-input-lines)))
