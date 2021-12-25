@@ -1,0 +1,26 @@
+inp w 0   inp w 1   inp w 2   inp w 3   inp w 4   inp w 5      inp w 6   inp w 7      inp w 8    inp w 9   inp w a      inp w b     inp w c       inp w d
+
+mul x 0   mul x 0   mul x 0   mul x 0   mul x 0   mul x 0      mul x 0   mul x 0      mul x 0    mul x 0   mul x 0      mul x 0     mul x 0       mul x 0
+add x z   add x z   add x z   add x z   add x z   add x z      add x z   add x z      add x z    add x z   add x z      add x z     add x z       add x z
+mod x 26  mod x 26  mod x 26  mod x 26  mod x 26  mod x 26     mod x 26  mod x 26     mod x 26   mod x 26  mod x 26     mod x 26    mod x 26      mod x 26
+div z 1   div z 1   div z 1   div z 1   div z 1   div z 26     div z 1   div z 26     div z 26   div z 1   div z 26     div z 26    div z 26      div z 26
+
+add x 15  add x 10  add x 12  add x 10  add x 14  add x -11    add x 10  add x -16    add x -9   add x 11  add x -8     add x -8    add x -10     add x -9
+eql x w   eql x w   eql x w   eql x w   eql x w   eql x w      eql x w   eql x w      eql x w    eql x w   eql x w      eql x w     eql x w       eql x w
+eql x 0   eql x 0   eql x 0   eql x 0   eql x 0   eql x 0      eql x 0   eql x 0      eql x 0    eql x 0   eql x 0      eql x 0     eql x 0       eql x 0
+
+x=1       x=1       x=1       x=1       x=1       x=0,1        x=1       x=0,1        x=0,1      x=1       x=0,1        x=0,1       x=0,1         x=0,1
+
+mul y 0   mul y 0   mul y 0   mul y 0   mul y 0   mul y 0      mul y 0   mul y 0      mul y 0    mul y 0   mul y 0      mul y 0     mul y 0       mul y 0
+add y 25  add y 25  add y 25  add y 25  add y 25  add y 25     add y 25  add y 25     add y 25   add y 25  add y 25     add y 25    add y 25      add y 25
+mul y x   mul y x   mul y x   mul y x   mul y x   mul y x      mul y x   mul y x      mul y x    mul y x   mul y x      mul y x     mul y x       mul y x
+add y 1   add y 1   add y 1   add y 1   add y 1   add y 1      add y 1   add y 1      add y 1    add y 1   add y 1      add y 1     add y 1       add y 1
+mul z y   mul z y   mul z y   mul z y   mul z y   mul z y      mul z y   mul z y      mul z y    mul z y   mul z y      mul z y     mul z y       mul z y
+
+mul y 0   mul y 0   mul y 0   mul y 0   mul y 0   mul y 0      mul y 0   mul y 0      mul y 0    mul y 0   mul y 0      mul y 0     mul y 0       mul y 0
+add y w   add y w   add y w   add y w   add y w   add y w      add y w   add y w      add y w    add y w   add y w      add y w     add y w       add y w
+add y 13  add y 16  add y 2   add y 8   add y 11  add y 6      add y 12  add y 2      add y 2    add y 15  add y 1      add y 10    add y 14      add y 10
+mul y x   mul y x   mul y x   mul y x   mul y x   mul y x      mul y x   mul y x      mul y x    mul y x   mul y x      mul y x     mul y x       mul y x
+add z y   add z y   add z y   add z y   add z y   add z y      add z y   add z y      add z y    add z y   add z y      add z y     add z y       add z y
+
+d0+13     d1+16     d2+2      d3+8      d4+11     d4+11-11=d5  d6+12     d6+12-16=d7  d3+8-9=d8  d9+15     d9+15-8=d10  d2+2-8=d11  d1+16-10=d12  d0+13-9=d13
