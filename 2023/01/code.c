@@ -1,29 +1,43 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAXLINE 1000
 
 main()
 {
 	char line[MAXLINE];
-	int res, i, val;
+	int res, i, j, val, c;
+	char *digits[9] = {
+		"one",
+		"two",
+		"three",
+		"four",
+		"five",
+		"six",
+		"seven",
+		"eight",
+		"nine",
+	};
 
 	res = 0;
 	while (fgets(line, MAXLINE, stdin) != 0) {
-		i = val =  0;
-		printf("%s\n", line);
+		i = val =  c = 0;
 		while (line[i] != '\0') {
-			if (line[i] >= '0' && line[i] <= '9') {
-				if (val == 0) {
-					val = (line[i]-'0')*10 + line[i]-'0';
-				} else {
-					val = (val/10)*10 + line[i]-'0';
-				}
-			}
-			printf("%d, ", val);
+			if (isdigit(line[i]))
+				c = line[i]-'0';
+			else
+				for (j = 0; j < 9; j++)
+					if (strlen(digits[j]) < strlen(line+i))  // Remember the trailing \n
+						if (memcmp(digits[j], line+i, strlen(digits[j])) == 0)
+							c = j+1;
+			if (val == 0)
+				val = c*10 + c;
+			else
+				val = (val/10)*10 + c;
 			i++;
 		}
-		printf("\n");
 		res += val;
 	}
 	printf("%d\n", res);
