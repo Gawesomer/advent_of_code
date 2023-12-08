@@ -9,11 +9,12 @@ main()
 {
 	char line[MAXLINE];
 	char *game, *draw, *color, *brkl, *brkg;
-	int res, i, count, possible;
+	int res1, res2, i, count, possible, max_red, max_green, max_blue;
 
-	res = i = 0;
+	res1 = res2 = i = 0;
 	while (fgets(line, MAXLINE, stdin) != 0) {
 		printf("Game %d\n", ++i);
+		max_red = max_blue = max_green = 0;
 		possible = 1;
 		for (game = strtok_r(line, ":", &brkl), game = strtok_r(NULL, ";\n", &brkl);
 		     game;
@@ -30,21 +31,29 @@ main()
 					case 'r':
 						if (count > 12)
 							possible = 0;
+						if (count > max_red)
+							max_red = count;
 						break;
 					case 'g':
 						if (count > 13)
 							possible = 0;
+						if (count > max_green)
+							max_green = count;
 						break;
 					case 'b':
 						if (count > 14)
 							possible = 0;
+						if (count > max_blue)
+							max_blue = count;
 						break;
 				}
 			}
 		}
 		printf("possible - %d\n", possible);
 		if (possible)
-			res += i;
+			res1 += i;
+		res2 += max_red * max_green * max_blue;
 	}
-	printf("%d\n", res);
+	printf("%d\n", res1);
+	printf("%d\n", res2);
 }
